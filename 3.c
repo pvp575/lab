@@ -24,24 +24,22 @@ void fileout(reader *X, int i){
     FILE *file;
     file = fopen("struct.txt", "w");
     for (int j = 0; j <= i; j++){
-        fprintf(file, "%s\t%d\t%s\t%d\n", X[j].name, X[j].number, X[j].book, X[j].date);
+        fprintf(file, "%s %d %s %d", X[j].name, X[j].number, X[j].book, X[j].date);
     }
     fclose(file);
 }
 int filein(reader *X){
     FILE *file;
     file = fopen("struct.txt", "r");
-    int i = 0;
-    char a;
-    while ((a = fgetc(file)) != EOF){
-        if ( a == '\n' ) i++;
-    }
-    printf("%d\n\n", i);
-    for (int j = 0; j <= i; j++){
-        fscanf(file, "%s%d%s%d", X[j].name, &X[j].number, X[j].book, &X[j].date);
+    int j = 0;
+    while (fscanf(file, "%s%d%s%d", X[j].name, &X[j].number, X[j].book, &X[j].date) > 0){
+        printf("%s\t%d\t%s\t%d\n", X[j].name, X[j].number, X[j].book, X[j].date);
+        j++;
     }
     fclose(file);
-    return i;
+    j--;
+    //printf("%d\n", j);
+    return j;
 }
 void sort(reader *X, int i){
     int a;
@@ -109,6 +107,7 @@ void red(reader *X){
     scanf("%d", &x);
     y--;
     char str[15];
+    printf("Введите новое значение:\n");
     switch (x){
     case 1:
         scanf("%s", X[y].name);
@@ -117,7 +116,7 @@ void red(reader *X){
         scanf("%d", &X[y].number);
         break;
     case 3:
-        scanf("%s", X[y].name);
+        scanf("%s", X[y].book);
         break;
     case 4:
         scanf("%d", &X[y].date);
@@ -182,6 +181,5 @@ int main(){
             return 0;
     }
     }
-
     return 0;
 }
