@@ -7,13 +7,17 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <malloc.h>
 
 int main(){
 
     char c;
-    char A[10];
-    int B[10];
-    long C[10];
+    char *A;
+    A = malloc(sizeof(char)*10);
+    int *B;
+    B = malloc(sizeof(int)*10);
+    long *C;
+    C = malloc(sizeof(long)*10);
     int type = 3, j = 0, k = 0, l = 0;
     for (int i = 0; i < 10; i++){
         scanf("%c", &c);
@@ -52,16 +56,25 @@ int main(){
                 A[j] = c;
                 printf("%c\n", A[j]);
                 j++;
+                if (j > 9){
+                    A = realloc(A, sizeof(char)*j);
+                }
                 break;
             case 1:
                 B[k] = atoi(&c);
                 printf("%d\n", B[k]);
                 k++;
+                if (k > 9){
+                    B = realloc(B, sizeof(int)*k);
+                }
                 break;
             case 2:
                 C[l] = atoi(&c);
                 printf("%ld\n", C[l]);
                 l++;
+                if (l > 9){
+                    C = realloc(C, sizeof(long)*l);
+                }
                 break;
 
             default:
