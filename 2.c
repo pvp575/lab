@@ -19,10 +19,11 @@ int main(){
     long *C;
     C = malloc(sizeof(long)*10);
     int type = 3, j = 0, k = 0, l = 0;
-    for (int i = 0; i < 10; i++){
+    int i = 0;
+    while (1){
         scanf("%c", &c);
         if(c == '\n'){
-            printf("END\n");
+            printf("END\nВсего получено %d переменных\nchar: %d\nint: %d\nlong: %d\n", (j+k+l), j, k, l);
             return 0;
         }
         //printf("%c", c);
@@ -81,6 +82,7 @@ int main(){
                 break;
             }
         }
+        i++;
     }
 
     return 0;
