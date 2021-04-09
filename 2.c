@@ -9,14 +9,13 @@
 #include <stdlib.h>
 #include <malloc.h>
 
-int main(){
-
+int input(char **A, int *B, long *C){
     char c;
-    char *A;
+    
     A = malloc(sizeof(char)*10);
-    int *B;
+    
     B = malloc(sizeof(int)*10);
-    long *C;
+    
     C = malloc(sizeof(long)*10);
     int type = 3, j = 0, k = 0, l = 0;
     int i = 0;
@@ -54,8 +53,8 @@ int main(){
             switch (type)
             {
             case 0:
-                A[j] = c;
-                printf("%c\n", A[j]);
+                *(A+j) = &c;
+                printf("%c\n", **(A+j));
                 j++;
                 if (j > 9){
                     A = realloc(A, sizeof(char)*j);
@@ -84,6 +83,13 @@ int main(){
         }
         i++;
     }
+}
+
+int main(){
+    char *A = NULL;
+    int *B = NULL;
+    long *C = NULL;
+    input(&A, B, C);
 
     return 0;
 }
