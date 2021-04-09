@@ -6,7 +6,7 @@ struct reader {
     char name[15];
     int number;
     char book[15];
-    int date;
+    int period;
 };
 typedef struct reader reader;
 
@@ -17,14 +17,14 @@ void newrec(reader *X){
     scanf("%d", &X->number);
     printf("Введите название книги: ");
     scanf("%s", X->book);
-    printf("Введите дату: ");
-    scanf("%d", &X->date);         
+    printf("Введите срок возврата: ");
+    scanf("%d", &X->period);     
 }
 void fileout(reader *X, int i){
     FILE *file;
     file = fopen("struct.txt", "w");
     for (int j = 0; j <= i; j++){
-        fprintf(file, "%s %d %s %d", X[j].name, X[j].number, X[j].book, X[j].date);
+        fprintf(file, "%s %d %s %d", X[j].name, X[j].number, X[j].book, X[j].period);
     }
     fclose(file);
 }
@@ -32,38 +32,37 @@ int filein(reader *X){
     FILE *file;
     file = fopen("struct.txt", "r");
     int j = 0;
-    while (fscanf(file, "%s%d%s%d", X[j].name, &X[j].number, X[j].book, &X[j].date) > 0){
-        printf("%s\t%d\t%s\t%d\n", X[j].name, X[j].number, X[j].book, X[j].date);
+    while (fscanf(file, "%s%d%s%d", X[j].name, &X[j].number, X[j].book, &X[j].period) > 0){
+        printf("%s\t%d\t%s\t%d\n", X[j].name, X[j].number, X[j].book, X[j].period);
         j++;
     }
     fclose(file);
     j--;
-    //printf("%d\n", j);
     return j;
 }
 void sort(reader *X, int i){
     int a;
     int A[10], B[10];
-    printf("Сортировать по:\n1.Дате / 2.номеру билета\n");
+    printf("Сортировать по:\n1.сроку / 2.номеру билета\n");
     scanf("%d", &a);
     if (a == 1){
         for(int j = 0; j <= i; j++){
-            A[j] = X[j].date;
+            A[j] = X[j].period;
             B[j] = X[j].number;
         }
     }
     else{
         for(int j = 0; j <= i; j++){
             A[j] = X[j].number;
-            B[j] = X[j].date;
+            B[j] = X[j].period;
         }
     }
-    for (int j = 0; j < i; j++){
-        for (int k = i; k > j; k--) // для всех элементов после i-ого
+    for (int j = 0; j < i; j++){  	
+        for (int k = i; k > j; k--) 
         {
-            if (A[k - 1] > A[k]) // если текущий элемент меньше предыдущего
+            if (A[k - 1] > A[k]) 
             {
-                int temp1 = A[k - 1]; // меняем их местами
+                int temp1 = A[k - 1]; 
                 A[k - 1] = A[k];
                 A[k] = temp1;
                 int temp2 = B[k-1];
@@ -82,21 +81,21 @@ void sort(reader *X, int i){
     }
     if (a == 1){
         for(int j = 0; j <= i; j++){
-            X[j].date = A[j];
+            X[j].period = A[j];
             X[j].number = B[j];
         }
     }
     else{
         for(int j = 0; j <= i; j++){
             X[j].number = A[j];
-            X[j].date = B[j];
+            X[j].period = B[j];
         }
     }
 }
 void screen(reader *X, int i){
-    printf("Name\tNumber\tBook\tDate\n");
+    printf("Name\tNumber\tBook\tPeriod\n");
     for (int j = 0; j <= i; j++){
-        printf("%s\t%d\t%s\t%d\n", X[j].name, X[j].number, X[j].book, X[j].date);
+        printf("%s\t%d\t%s\t%d\n", X[j].name, X[j].number, X[j].book, X[j].period);
     }
 }
 void red(reader *X){
@@ -119,7 +118,7 @@ void red(reader *X){
         scanf("%s", X[y].book);
         break;
     case 4:
-        scanf("%d", &X[y].date);
+        scanf("%d", &X[y].period);
         break;
     default:
         break;
@@ -135,7 +134,7 @@ int del(reader *X, int i){
             strcpy(X[j].name, X[j+1].name);
             X[j].number = X[j+1].number;
             strcpy(X[j].book, X[j+1].book);
-            X[j].date = X[j+1].date;
+            X[j].period = X[j+1].period;
         }
     }
     i--;
@@ -144,12 +143,8 @@ int del(reader *X, int i){
 
 int main(){
     reader X[10];
-    int i = 0;
+    int i = 0; //количество записей
     int menu;
-    strcpy(X[i].name, "Ivanov");
-    X[i].number = 1;
-    strcpy(X[i].book, "Book");
-    X[i].date = 10;
 
     while(1){
     printf("1.Добавить запись\n2.Записать в файл\n3.Прочитать из файла\n4.Сортировка\n5.Вывести на экран\n6.Редактировать\n7.Удалить\n");
